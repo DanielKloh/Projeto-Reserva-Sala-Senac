@@ -22,11 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Definir o idioma usado no calendário
       locale: 'pt-br',
-
-      // Definir a data inicial
-      //initialDate: '2023-01-12',
-      //initialDate: '2023-10-12',
-
+      
       // Permitir clicar nos nomes dos dias da semana 
       navLinks: true,
 

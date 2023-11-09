@@ -159,24 +159,47 @@ $dia_posterior->modify('+1 day');
                             </div>
                         </div>
 
+
+
                         <div class="row mb-3">
-                            <label for="cad_color" class="col-sm-2 col-form-label">Cor</label>
+                            <label for="sala_id" class="col-sm-2 col-form-label">sala_id</label>
                             <div class="col-sm-10">
-                                <select name="cad_color" class="form-control" id="cad_color">
-                                    <option value="">Selecione</option>
-                                    <option style="color:#FFD700;" value="#FFD700">Amarelo</option>
-                                    <option style="color:#0071c5;" value="#0071c5">Azul Turquesa</option>
-                                    <option style="color:#FF4500;" value="#FF4500">Laranja</option>
-                                    <option style="color:#8B4513;" value="#8B4513">Marrom</option>
-                                    <option style="color:#1C1C1C;" value="#1C1C1C">Preto</option>
-                                    <option style="color:#436EEE;" value="#436EEE">Royal Blue</option>
-                                    <option style="color:#A020F0;" value="#A020F0">Roxo</option>
-                                    <option style="color:#40E0D0;" value="#40E0D0">Turquesa</option>
-                                    <option style="color:#228B22;" value="#228B22">Verde</option>
-                                    <option style="color:#8B0000;" value="#8B0000">Vermelho</option>
-                                </select>
+                                <input type="int" name="sala_id" class="form-control" id="sala_id">
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="periodo_id" class="col-sm-2 col-form-label">periodo_id</label>
+                            <div class="col-sm-10">
+                                <input type="int" name="periodo_id" class="form-control" id="periodo_id">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="professor_desc" class="col-sm-2 col-form-label">professor_desc</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="professor_desc" class="form-control" id="professor_desc">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="disciplina_desc" class="col-sm-2 col-form-label">disciplina_desc</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="disciplina_desc" class="form-control" id="disciplina_desc">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="status" class="col-sm-2 col-form-label">status</label>
+                            <div class="col-sm-10">
+                                <input type="int" name="status" class="form-control" id="status">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="observacao" class="col-sm-2 col-form-label">observacao</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="observacao" class="form-control" id="observacao">
+                            </div>
+                        </div>
+
+
 
                         <button type="submit" name="btnCadEvento" class="btn btn-success" id="btnCadEvento">Cadastrar</button>
 

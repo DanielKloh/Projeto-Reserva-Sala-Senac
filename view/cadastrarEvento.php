@@ -8,20 +8,25 @@ include_once './conexao.php';
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 // Criar a QUERY cadastrar evento no banco de dados
-$query_cad_event = "INSERT INTO events (title, color, start, end) VALUES (:title, :color, :start, :end)";
+$query_cad_event = "INSERT INTO reserva (sala_id, periodo_id,dia,professor_desc,disciplina_desc,status,observacao,data_final) VALUES (:sala_id, :periodo_id,:dia, :professor_desc, :disciplina_desc,:status,:observacao,:data_final)";
 
 // Prepara a QUERY
 $cad_event = $conn->prepare($query_cad_event);
 
 // Substituir o link pelo valor
-$cad_event->bindParam(':title', $dados['cad_title']);
-$cad_event->bindParam(':color', $dados['cad_color']);
-$cad_event->bindParam(':start', $dados['cad_start']);
-$cad_event->bindParam(':end', $dados['cad_end']);
+$cad_event->bindParam(':sala_id', $dados['sala_id']);
+$cad_event->bindParam(':periodo_id', $dados['periodo_id']);
+$cad_event->bindParam(':dia', $dados['cad_start']);
+$cad_event->bindParam(':professor_desc', $dados['professor_desc']);
+$cad_event->bindParam(':disciplina_desc', $dados['disciplina_desc']);
+$cad_event->bindParam(':status', $dados['status']);
+$cad_event->bindParam(':observacao', $dados['observacao']);
+$cad_event->bindParam(':data_final', $dados['cad_end']);
+
 
 // Verificar se consegui cadastrar corretamente
 if ($cad_event->execute()) {
-    $retorna = ['status' => true, 'msg' => 'Evento cadastrado com sucesso!', 'id' => $conn->lastInsertId(), 'title' => $dados['cad_title'], 'color' => $dados['cad_color'], 'start' => $dados['cad_start'], 'end' => $dados['cad_end']];
+    $retorna = ['status' => true, 'msg' => 'Evento cadastrado com sucesso!', 'id' => $conn->lastInsertId(), 'title' => $dados['disciplina_desc'],'start' => $dados['cad_start'], 'end' => $dados['cad_end']];
 } else {
     $retorna = ['status' => false, 'msg' => 'Erro: Evento não cadastrado!'];
 }

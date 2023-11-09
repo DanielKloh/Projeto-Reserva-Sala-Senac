@@ -4,7 +4,7 @@
 include_once './conexao.php';
 
 // QUERY para recuperar os eventos
-$query_events = "SELECT id, title, color, start, end FROM events";
+$query_events = "SELECT id, disciplina_desc, dia, data_final FROM reserva";
 
 // Prepara a QUERY
 $result_events = $conn->prepare($query_events);
@@ -23,10 +23,9 @@ while($row_events = $result_events->fetch(PDO::FETCH_ASSOC)){
 
     $eventos[] = [
         'id' => $id,
-        'title' => $title,
-        'color' => $color,
-        'start' => $start,
-        'end' => $end,
+        'title' => $disciplina_desc,
+        'start' => $dia,
+        'end' => $data_final,
     ];
 }
 
