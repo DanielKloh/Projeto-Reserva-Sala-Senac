@@ -3,8 +3,11 @@
 // Incluir o arquivo com a conexão com banco de dados
 include_once './conexao.php';
 
+
+$salaId = $_COOKIE["salaId"];
+
 // QUERY para recuperar os eventos
-$query_events = "SELECT id, disciplina_desc, dia, data_final FROM reserva";
+$query_events = "SELECT id, disciplina_desc, dia, data_final FROM reserva where sala_id = ".$salaId."";
 
 // Prepara a QUERY
 $result_events = $conn->prepare($query_events);

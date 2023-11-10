@@ -18,7 +18,8 @@ function abrir($id){
 		,a.disciplina_desc
 		,a.status
 		,a.observacao
-		,date_format(a.dia,"%d/%m/%Y") as dia
+		,date_format(a.dia,"%d/%m/%Y %h: %m") as dia
+		,date_format(a.data_final,"%d/%m/%Y %h: %m") as data_final
 		
 			
 	 from reserva a

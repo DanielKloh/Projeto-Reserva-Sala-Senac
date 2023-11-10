@@ -22,6 +22,7 @@ if (!isset($id)) {
 require_once "seguranca.php";
 require_once("../controller/dashboardController.php");
 require_once("../controller/salaController.php");
+require_once("../controller/detalhesReserva.php");
 require_once("../model/sala.php");
 
 $dsc = new dashboardController();
@@ -48,10 +49,24 @@ $dia_anterior->modify('-1 day');
 $dia_posterior = date_create_from_format('d/m/Y', $hoje->format("d/m/Y"));
 $dia_posterior->modify('+1 day');
 
+$salaId = $_GET["salaId"];
+setcookie("salaId", $salaId, time() + 2, "/");
+
+if (isset($_POST["idDia"])) {
 
 
+    $detalheReserva = new detalhesReserva();
 
-
+    $dados = $detalheReserva->buscarDados($_POST["idDia"]);
+    echo '<script>
+    window.onload = function(){
+    
+        let modal = document.getElementById("modalVisualizarCompleta");
+        modal.removeAttribute("class","ocultar");
+        modal.setAttribute("class","show");
+    }
+    </script>';
+}
 ?>
 
 
@@ -67,7 +82,7 @@ $dia_posterior->modify('+1 day');
     <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
 
-    <script src="js/jquery.js"></script>
+    <script src="js/jquery.js"></>
     <script src="js/jquery.datetimepicker.full.js"></script>
     <script src="js/dateformat.js"></script>
 
@@ -89,40 +104,129 @@ $dia_posterior->modify('+1 day');
 
     <h2 class="mb-4">Agenda</h2>
 
+
     <span id="msg"></span>
 
     <div id='calendar'></div>
 
     <!-- Modal Visualizar -->
-    <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel" aria-hidden="true">
+    <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel"
+        aria-hidden="true" ="">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="visualizarModalLabel">Visualizar o Evento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
+                <?php echo '<form action="visualizarSala.php?salaId=' . $salaId . '" method="POST">' ?>
+
+                <h3 class="text-center mt-3">Visualizar os dados desse periodo</h3>
+
+                <div type="text" class="text-center mt-3" id="disciplina_desc"></div>
+
+                <input type="hidden" id="idDia" name="idDia">
+
+                <dt class="col-sm-3">Início: </dt>
+                <dd class="col-sm-9" id="visualizar_start"></dd>
+
+                <dt class="col-sm-3">Fim: </dt>
+                <dd class="col-sm-9" id="visualizar_end"></dd>
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-primary">Visualizar</button>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Visualizar Completa -->
+    <div class="ocultar" id="modalVisualizarCompleta">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="cadastrarModalLabel">Detalhes da Reserva</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
 
-                    <dl class="row">
+                    <!-- <span id="msgCadEvento"></span> -->
 
-                        <dt class="col-sm-3">ID: </dt>
-                        <dd class="col-sm-9" id="visualizar_id"></dd>
+                    <form method="POST" id="formCadEvento" class="needs-validation">
 
-                        <dt class="col-sm-3">Título: </dt>
-                        <dd class="col-sm-9" id="visualizar_title"></dd>
+                        <div class="row mb-3">
+                            <label for="cad_start" class="col-sm-2 col-form-label">Início</label>
+                            <div class="col-sm-10">
+                                <?php $dados[0]['dia'] ?>
+                            </div>
+                        </div>
 
-                        <dt class="col-sm-3">Início: </dt>
-                        <dd class="col-sm-9" id="visualizar_start"></dd>
+                        <div class="row mb-3">
+                            <label for="cad_end" class="col-sm-2 col-form-label">Fim</label>
+                            <div class="col-sm-10">
+                                <?php $dados[0]["data_final"] ?>
 
-                        <dt class="col-sm-3">Fim: </dt>
-                        <dd class="col-sm-9" id="visualizar_end"></dd>
+                            </div>
+                        </div>
 
-                    </dl>
+                        <?php echo '<input type="hidden" name="sala_id" id="sala_id" value=' . $salaId . '>' ?>
 
+                        <div class="row mb-3">
+                            <label for="periodo_id" class="col-sm-2 col-form-label">Turno</label>
+                            <div class="col-sm-10">
+                                <select id="periodo_id" class="form-select" name="periodo_id" required>
+                                    <option selected value="1">Manhã</option>
+                                    <option value="2">Tarde</option>
+                                    <option value="3">Noite</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
+                            <div class="col-sm-9">
+                                <?php $dados[0]["professor_desc"] ?>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
+                            <div class="col-sm-9">
+                                <?php $dados[0]["disciplina_desc"] ?>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="status" class="col-sm-2 col-form-label">Status</label>
+                            <div class="col-sm-10">
+                                <select id="status" class="form-select" name="status" required>
+                                    <option selected value="1">Reservado</option>
+                                    <option value="2">Confirmada</option>
+                                    <option value="3">Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
+                            <div class="col-sm-9">
+                                <?php $dados[0]["observacao"] ?>
+                            </div>
+                        </div>
+
+
+
+                        <button type="submit" name="btnCadEvento" class="btn btn-success"
+                            id="btnCadEvento">Cadastrar</button>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     <!-- Modal Cadastrar -->
     <div class="modal fade" id="cadastrarModal" tabindex="-1" aria-labelledby="cadastrarModalLabel" aria-hidden="true">
@@ -136,75 +240,75 @@ $dia_posterior->modify('+1 day');
 
                     <span id="msgCadEvento"></span>
 
-                    <form method="POST" id="formCadEvento">
-
-                        <div class="row mb-3">
-                            <label for="cad_title" class="col-sm-2 col-form-label">Título</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="cad_title" class="form-control" id="cad_title" placeholder="Título do evento">
-                            </div>
-                        </div>
+                    <form method="POST" id="formCadEvento" class="needs-validation">
 
                         <div class="row mb-3">
                             <label for="cad_start" class="col-sm-2 col-form-label">Início</label>
                             <div class="col-sm-10">
-                                <input type="datetime-local" name="cad_start" class="form-control" id="cad_start">
+                                <input type="datetime-local" name="cad_start" class="form-control" id="cad_start"
+                                    required>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="cad_end" class="col-sm-2 col-form-label">Fim</label>
                             <div class="col-sm-10">
-                                <input type="datetime-local" name="cad_end" class="form-control" id="cad_end">
+                                <input type="datetime-local" name="cad_end" class="form-control" id="cad_end" required>
                             </div>
                         </div>
 
-
+                        <?php echo '<input type="hidden" name="sala_id" id="sala_id" value=' . $salaId . '>' ?>
 
                         <div class="row mb-3">
-                            <label for="sala_id" class="col-sm-2 col-form-label">sala_id</label>
+                            <label for="periodo_id" class="col-sm-2 col-form-label">Turno</label>
                             <div class="col-sm-10">
-                                <input type="int" name="sala_id" class="form-control" id="sala_id">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="periodo_id" class="col-sm-2 col-form-label">periodo_id</label>
-                            <div class="col-sm-10">
-                                <input type="int" name="periodo_id" class="form-control" id="periodo_id">
+                                <select id="periodo_id" class="form-select" name="periodo_id" required>
+                                    <option selected value="1">Manhã</option>
+                                    <option value="2">Tarde</option>
+                                    <option value="3">Noite</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label for="professor_desc" class="col-sm-2 col-form-label">professor_desc</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="professor_desc" class="form-control" id="professor_desc">
+                            <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="professor_desc" class="form-control" id="professor_desc"
+                                    required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="disciplina_desc" class="col-sm-2 col-form-label">disciplina_desc</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="disciplina_desc" class="form-control" id="disciplina_desc">
+                            <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="disciplina_desc" class="form-control" id="disciplina_desc"
+                                    required>
                             </div>
                         </div>
+
                         <div class="row mb-3">
-                            <label for="status" class="col-sm-2 col-form-label">status</label>
+                            <label for="status" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
-                                <input type="int" name="status" class="form-control" id="status">
+                                <select id="status" class="form-select" name="status" required>
+                                    <option selected value="1">Reservado</option>
+                                    <option value="2">Confirmada</option>
+                                    <option value="3">Cancelada</option>
+                                </select>
                             </div>
                         </div>
+
                         <div class="row mb-3">
-                            <label for="observacao" class="col-sm-2 col-form-label">observacao</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="observacao" class="form-control" id="observacao">
+                            <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="observacao" class="form-control" id="observacao" required>
                             </div>
                         </div>
 
 
 
-                        <button type="submit" name="btnCadEvento" class="btn btn-success" id="btnCadEvento">Cadastrar</button>
+                        <button type="submit" name="btnCadEvento" class="btn btn-success"
+                            id="btnCadEvento">Cadastrar</button>
 
                     </form>
-
                 </div>
             </div>
         </div>

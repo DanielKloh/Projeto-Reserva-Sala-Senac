@@ -61,3 +61,10 @@ hr { border:none; border-bottom:dashed 1px #E6E6E6; }
 .reservado hr, .cancelado hr, .confirmado hr{ border:none; }
 .disponivel:hover { background-color:#DFDFDF; cursor:pointer; }
 
+.show{
+    display: block;
+}
+
+.ocultar{
+    display: none;
+}

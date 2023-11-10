@@ -1,7 +1,7 @@
 ﻿<?php
 
-require "../model/reserva.php";
-require "util.php";
+require_once "../model/reserva.php";
+require_once "util.php";
 
 
 class ReservaController{

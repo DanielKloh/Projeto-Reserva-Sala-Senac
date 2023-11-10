@@ -81,7 +81,7 @@ class salaController
 		{
 			$tabela .= '<tr>
 							<td>'.$linha['id'].'</td>
-							<td><a href="visualizarSala.php?id='.$linha['id'].'">'.$linha['nome'].'</a></td>
+							<td><a href="visualizarSala.php?salaId='.$linha['id'].'">'.$linha['nome'].'</a></td>
 						</tr>		
 							';
 		}
