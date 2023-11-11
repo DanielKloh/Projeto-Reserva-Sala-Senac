@@ -50,14 +50,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Enviar para a janela modal os dados do evento
       let disciplina_desc = document.getElementById("disciplina_desc");
-      //   disciplina_desc.setAttribute("type","hidden");
-      disciplina_desc.innerText = info.event.title;
+      let professor_desc = document.getElementById("professor_desc");
+      let observacao = document.getElementById("observacao");
+      let status = document.getElementById("status");
+      let turno = document.getElementById("turno");
 
-      // Enviar para a janela modal os dados do evento
-      let idDia = document.getElementById("idDia");
-      //   idDia.setAttribute("type","hidden");
-      idDia.setAttribute("value", info.event.id);
-      
+      disciplina_desc.innerText = info.event.extendedProps.disciplina_desc;
+      professor_desc.innerText = info.event.extendedProps.professor_desc;
+      observacao.innerText = info.event.extendedProps.observacao;
+      status.innerText = info.event.extendedProps.status;
+      if (info.event.extendedProps.turno === 1) {
+        turno.innerText = "Manhã";
+      } else if (info.event.extendedProps.turno === 2) {
+        turno.innerText = "Tarde";
+      } else {
+        turno.innerText = "Noite";
+      }
+
       document.getElementById("visualizar_start").innerText =
         info.event.start.toLocaleString();
       document.getElementById("visualizar_end").innerText =
@@ -67,8 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Abrir a janela modal visualizar
       visualizarModal.show();
-
-
     },
     // Abrir a janela modal cadastrar quando clicar sobre o dia no calendário
     select: function (info) {
@@ -177,6 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Apresentar no botão o texto Cadastrar
       btnCadEvento.value = "Cadastrar";
+      
     });
   }
 

@@ -83,7 +83,7 @@ if (isset($_POST["idDia"])) {
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
 
     <script src="js/jquery.js"></>
-    <script src="js/jquery.datetimepicker.full.js"></script>
+            <script src="js/jquery.datetimepicker.full.js"></script>
     <script src="js/dateformat.js"></script>
 
     <!-- <link href="css/select2.min.css" rel="stylesheet" /> -->
@@ -111,119 +111,72 @@ if (isset($_POST["idDia"])) {
 
     <!-- Modal Visualizar -->
     <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel"
-        aria-hidden="true" ="">
+        aria-hidden="true"="">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="visualizarModalLabel">Visualizar o Evento</h1>
+            <div class="modal-content container">
+                <div class="modal-header text-center">
+                    <h3 class="mt-3">Dados desse periodo</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <?php echo '<form action="visualizarSala.php?salaId=' . $salaId . '" method="POST">' ?>
-
-                <h3 class="text-center mt-3">Visualizar os dados desse periodo</h3>
-
-                <div type="text" class="text-center mt-3" id="disciplina_desc"></div>
-
-                <input type="hidden" id="idDia" name="idDia">
-
-                <dt class="col-sm-3">Início: </dt>
-                <dd class="col-sm-9" id="visualizar_start"></dd>
-
-                <dt class="col-sm-3">Fim: </dt>
-                <dd class="col-sm-9" id="visualizar_end"></dd>
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-primary">Visualizar</button>
+                <div class="row mb-3 mt-3">
+                    <label for="visualizar_start" class="col-sm-3 col-form-label">Início</label>
+                    <div class="col-sm-8">
+                        <span type="datetime-local" class="form-control" id="visualizar_start"> </sp>
+                    </div>
                 </div>
 
-                </form>
+                <div class="row mb-3">
+                    <label for="visualizar_end" class="col-sm-3 col-form-label">Fim</label>
+                    <div class="col-sm-8">
+                        <span type="datetime-local" class="form-control" id="visualizar_end"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="periodo_id" class="col-sm-3 col-form-label">Turno</label>
+                    <div class="col-sm-8">
+                        <span class="form-control" id="turno"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
+                    <div class="col-sm-8" id="porfessor_desc">
+                        <span class="form-control" id="professor_desc"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
+                    <div class="col-sm-8">
+                        <span class="form-control" id="disciplina_desc"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="status" class="col-sm-3 col-form-label">Status</label>
+                    <div class="col-sm-8">
+                        <span class="form-control" id="status"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
+                    <div class="col-sm-8">
+                        <span class="form-control" id="observacao"></span>
+                    </div>
+                </div>
+                <div class="text-center mt-3 mb-5">
+                    <button type="submit" class="btn btn-warning">Editar</button>
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- Modal Visualizar Completa -->
-    <div class="ocultar" id="modalVisualizarCompleta">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="cadastrarModalLabel">Detalhes da Reserva</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
 
-                    <!-- <span id="msgCadEvento"></span> -->
-
-                    <form method="POST" id="formCadEvento" class="needs-validation">
-
-                        <div class="row mb-3">
-                            <label for="cad_start" class="col-sm-2 col-form-label">Início</label>
-                            <div class="col-sm-10">
-                                <?php $dados[0]['dia'] ?>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="cad_end" class="col-sm-2 col-form-label">Fim</label>
-                            <div class="col-sm-10">
-                                <?php $dados[0]["data_final"] ?>
-
-                            </div>
-                        </div>
-
-                        <?php echo '<input type="hidden" name="sala_id" id="sala_id" value=' . $salaId . '>' ?>
-
-                        <div class="row mb-3">
-                            <label for="periodo_id" class="col-sm-2 col-form-label">Turno</label>
-                            <div class="col-sm-10">
-                                <select id="periodo_id" class="form-select" name="periodo_id" required>
-                                    <option selected value="1">Manhã</option>
-                                    <option value="2">Tarde</option>
-                                    <option value="3">Noite</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
-                            <div class="col-sm-9">
-                                <?php $dados[0]["professor_desc"] ?>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
-                            <div class="col-sm-9">
-                                <?php $dados[0]["disciplina_desc"] ?>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="status" class="col-sm-2 col-form-label">Status</label>
-                            <div class="col-sm-10">
-                                <select id="status" class="form-select" name="status" required>
-                                    <option selected value="1">Reservado</option>
-                                    <option value="2">Confirmada</option>
-                                    <option value="3">Cancelada</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
-                            <div class="col-sm-9">
-                                <?php $dados[0]["observacao"] ?>
-                            </div>
-                        </div>
-
-
-
-                        <button type="submit" name="btnCadEvento" class="btn btn-success"
-                            id="btnCadEvento">Cadastrar</button>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 

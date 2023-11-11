@@ -7,7 +7,7 @@ include_once './conexao.php';
 $salaId = $_COOKIE["salaId"];
 
 // QUERY para recuperar os eventos
-$query_events = "SELECT id, disciplina_desc, dia, data_final FROM reserva where sala_id = ".$salaId."";
+$query_events = "SELECT id, disciplina_desc, dia, data_final, professor_desc,status,observacao,periodo_id, color FROM reserva where sala_id = ".$salaId."";
 
 // Prepara a QUERY
 $result_events = $conn->prepare($query_events);
@@ -26,9 +26,15 @@ while($row_events = $result_events->fetch(PDO::FETCH_ASSOC)){
 
     $eventos[] = [
         'id' => $id,
-        'title' => $disciplina_desc,
+        'disciplina_desc' => $disciplina_desc,
         'start' => $dia,
         'end' => $data_final,
+        'professor_desc' => $professor_desc,
+        'status' => $status,
+        'observacao' => $observacao,
+        'turno' => $periodo_id,
+        'title' => $disciplina_desc,
+        'color' => $color,
     ];
 }
 

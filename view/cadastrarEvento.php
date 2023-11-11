@@ -4,11 +4,25 @@
 include_once './conexao.php';
 
 
+
 // Receber os dados enviado pelo JavaScript
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
+
+$color = "";
+if($dados['periodo_id'] == 1){
+    $color = "#00FA9A";
+}
+else if($dados["periodo_id"] == 2){
+    $color = "#00BFFF";
+}
+else{
+    $color = "#FF6347";
+}
+
+
 // Criar a QUERY cadastrar evento no banco de dados
-$query_cad_event = "INSERT INTO reserva (sala_id, periodo_id,dia,professor_desc,disciplina_desc,status,observacao,data_final) VALUES (:sala_id, :periodo_id,:dia, :professor_desc, :disciplina_desc,:status,:observacao,:data_final)";
+$query_cad_event = "INSERT INTO reserva (sala_id, periodo_id,dia,professor_desc,disciplina_desc,status,observacao,data_final,color) VALUES (:sala_id, :periodo_id,:dia, :professor_desc, :disciplina_desc,:status,:observacao,:data_final, :color)";
 
 // Prepara a QUERY
 $cad_event = $conn->prepare($query_cad_event);
@@ -22,6 +36,7 @@ $cad_event->bindParam(':disciplina_desc', $dados['disciplina_desc']);
 $cad_event->bindParam(':status', $dados['status']);
 $cad_event->bindParam(':observacao', $dados['observacao']);
 $cad_event->bindParam(':data_final', $dados['cad_end']);
+$cad_event->bindParam(':color', $color);
 
 
 // Verificar se consegui cadastrar corretamente
