@@ -115,62 +115,142 @@ if (isset($_POST["idDia"])) {
         <div class="modal-dialog">
             <div class="modal-content container">
                 <div class="modal-header text-center">
-                    <h3 class="mt-3">Dados desse periodo</h3>
+                    <h3 class="mt-3" id="labelVisualizar">Visualizar Dados</h3>
+                    <h3 class="mt-3" id="labelEditar" style="display: none;">Editar Dados</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="row mb-3 mt-3">
-                    <label for="visualizar_start" class="col-sm-3 col-form-label">Início</label>
-                    <div class="col-sm-8">
-                        <span type="datetime-local" class="form-control" id="visualizar_start"> </sp>
+                <div id="visualizarReserva">
+                    <div class="row mb-3 mt-3">
+                        <label for="visualizar_start" class="col-sm-3 col-form-label">Início</label>
+                        <div class="col-sm-8">
+                            <span type="datetime-local" class="form-control" id="visualizar_start"> </sp>
+                        </div>
                     </div>
+
+                    <div class="row mb-3">
+                        <label for="visualizar_end" class="col-sm-3 col-form-label">Fim</label>
+                        <div class="col-sm-8">
+                            <span type="datetime-local" class="form-control" id="visualizar_end"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="periodo_id" class="col-sm-3 col-form-label">Turno</label>
+                        <div class="col-sm-8">
+                            <span class="form-control" id="turno"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
+                        <div class="col-sm-8" id="porfessor_desc">
+                            <span class="form-control" id="professor_desc"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
+                        <div class="col-sm-8">
+                            <span class="form-control" id="disciplina_desc"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="status" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-8">
+                            <span class="form-control" id="status"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
+                        <div class="col-sm-8">
+                            <span class="form-control" id="observacao"></span>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3 mb-5">
+                        <button type="submit" class="btn btn-warning" id="btnViewEditEvento">Editar</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
+                    </div>
+
                 </div>
 
-                <div class="row mb-3">
-                    <label for="visualizar_end" class="col-sm-3 col-form-label">Fim</label>
-                    <div class="col-sm-8">
-                        <span type="datetime-local" class="form-control" id="visualizar_end"></span>
-                    </div>
+                <div id="editarReserva" style="display: none;">
+                    <span id="msgEditReserva"></span>
+
+                    <form method="POST" id="formEditReserva">
+
+                        <input type="hidden" id="edit_id">
+
+                        <div class="row mb-3 mt-3">
+                            <label for="editar_start" class="col-sm-3 col-form-label">Início</label>
+                            <div class="col-sm-8">
+                                <input type="datetime-local" class="form-control" id="editar_start" name="editar_start">
+                                </sp>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="editar_end" class="col-sm-3 col-form-label">Fim</label>
+                            <div class="col-sm-8">
+                                <input type="datetime-local" class="form-control" id="editar_end" name="editar_end">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="editarPeriodo" class="col-sm-2 col-form-label">Turno</label>
+                            <div class="col-sm-10">
+                                <select id="editarPeriodo" class="form-select" name="editarPeriodo" required>
+                                    <option value="1">Manhã</option>
+                                    <option value="2">Tarde</option>
+                                    <option value="3">Noite</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
+                            <div class="col-sm-8" id="porfessor_desc">
+                                <input class="form-control" id="editar_professor_desc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="editar_disciplina_desc">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="editarStatus" class="col-sm-2 col-form-label">Status</label>
+                            <div class="col-sm-10">
+                                <select id="editarStatus" class="form-select" name="editarStatus" required>
+                                    <option selected value="1">Reservado</option>
+                                    <option value="2">Confirmada</option>
+                                    <option value="3">Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" id="editar_observacao">
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3 mb-5">
+                            <button type="button" name="btnEditReserva" id="btnEditReserva"
+                                class="btn btn-warning">Editar</button>
+                            <button type="submit" class="btn btn-success" id="btnViewEvento">Visualizar</button>
+                        </div>
+                    </form>
+
                 </div>
 
-                <div class="row mb-3">
-                    <label for="periodo_id" class="col-sm-3 col-form-label">Turno</label>
-                    <div class="col-sm-8">
-                        <span class="form-control" id="turno"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
-                    <div class="col-sm-8" id="porfessor_desc">
-                        <span class="form-control" id="professor_desc"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
-                    <div class="col-sm-8">
-                        <span class="form-control" id="disciplina_desc"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="status" class="col-sm-3 col-form-label">Status</label>
-                    <div class="col-sm-8">
-                        <span class="form-control" id="status"></span>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
-                    <div class="col-sm-8">
-                        <span class="form-control" id="observacao"></span>
-                    </div>
-                </div>
-                <div class="text-center mt-3 mb-5">
-                    <button type="submit" class="btn btn-warning">Editar</button>
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                </div>
 
             </div>
         </div>
