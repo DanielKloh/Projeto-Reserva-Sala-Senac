@@ -25,9 +25,8 @@ $query_edit_event = "UPDATE reserva SET sala_id=:sala_id, periodo_id=:periodo_id
 $edit_event = $conn->prepare($query_edit_event);
 
 // Substituir o link pelo valor
-$edit_event->bindParam(':id', $dados['edit_id']);
-$edit_event->bindParam(':sala_id', $dados['sala_id']);
 $edit_event->bindParam(':periodo_id', $dados['editarPeriodo']);
+$edit_event->bindParam(':sala_id', $dados['sala_id']);
 $edit_event->bindParam(':dia', $dados['editar_start']);
 $edit_event->bindParam(':professor_desc', $dados['editar_professor_desc']);
 $edit_event->bindParam(':disciplina_desc', $dados['editar_disciplina_desc']);
@@ -35,15 +34,15 @@ $edit_event->bindParam(':status', $dados['editarStatus']);
 $edit_event->bindParam(':observacao', $dados['editar_observacao']);
 $edit_event->bindParam(':data_final', $dados['editar_end']);
 $edit_event->bindParam(':color', $color);
-
+$edit_event->bindParam(':id', $dados['edit_id']);
 
 
 // Verificar se consegui editar corretamente
 if ($edit_event->execute()) {
-    $retorna = ['status' => true, 'msg' => 'Evento cadastrado com sucesso!', 'id' => $dados['edit_id'], 'title' => $dados['editar_disciplina_desc'],'start' => $dados['editar_start'], 'end' => $dados['editar_end']];
+    $resposta = ['status' => true, 'msg' => 'Reserva editada com sucesso!', 'id' => $dados['edit_id'], 'title' => $dados['editar_disciplina_desc'],'start' => $dados['editar_start'], 'end' => $dados['editar_end']];
 } else {
-    $retorna = ['status' => false, 'msg' => 'Erro: Evento não editado!'];
+    $resposta = ['status' => false, 'msg' => 'Erro: Reserva não editada!'];
 }
 
 // Converter o array em objeto e retornar para o JavaScript
-echo json_encode($retorna);
+echo json_encode($resposta);

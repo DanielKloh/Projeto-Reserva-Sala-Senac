@@ -52,21 +52,6 @@ $dia_posterior->modify('+1 day');
 $salaId = $_GET["salaId"];
 setcookie("salaId", $salaId, time() + 2, "/");
 
-if (isset($_POST["idDia"])) {
-
-
-    $detalheReserva = new detalhesReserva();
-
-    $dados = $detalheReserva->buscarDados($_POST["idDia"]);
-    echo '<script>
-    window.onload = function(){
-    
-        let modal = document.getElementById("modalVisualizarCompleta");
-        modal.removeAttribute("class","ocultar");
-        modal.setAttribute("class","show");
-    }
-    </script>';
-}
 ?>
 
 
@@ -182,13 +167,14 @@ if (isset($_POST["idDia"])) {
 
                     <form method="POST" id="formEditReserva">
 
-                        <input type="hidden" id="edit_id">
+                        <input type="hidden" id="edit_id" name="edit_id">
+                        
+                        <input type="hidden" id="sala_id" name="sala_id" value="<?php echo $salaId?>">
 
                         <div class="row mb-3 mt-3">
                             <label for="editar_start" class="col-sm-3 col-form-label">Início</label>
                             <div class="col-sm-8">
                                 <input type="datetime-local" class="form-control" id="editar_start" name="editar_start">
-                                </sp>
                             </div>
                         </div>
 
@@ -213,14 +199,14 @@ if (isset($_POST["idDia"])) {
                         <div class="row mb-3">
                             <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
                             <div class="col-sm-8" id="porfessor_desc">
-                                <input class="form-control" id="editar_professor_desc">
+                                <input type="text" class="form-control" id="editar_professor_desc" name="editar_professor_desc">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="editar_disciplina_desc">
+                                <input type="text" class="form-control" id="editar_disciplina_desc" name="editar_disciplina_desc">
                             </div>
                         </div>
 
@@ -238,15 +224,15 @@ if (isset($_POST["idDia"])) {
                         <div class="row mb-3">
                             <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
                             <div class="col-sm-8">
-                                <input class="form-control" id="editar_observacao">
+                                <input type="text"class="form-control" id="editar_observacao" name="editar_observacao">
                             </div>
                         </div>
 
                         <div class="text-center mt-3 mb-5">
-                            <button type="button" name="btnEditReserva" id="btnEditReserva"
-                                class="btn btn-warning">Editar</button>
-                            <button type="submit" class="btn btn-success" id="btnViewEvento">Visualizar</button>
+                            <button type="submit" name="btnEditReserva" id="btnEditReserva"class="btn btn-warning">Editar</button>
+                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn btn-success">Visualizar</button>
                         </div>
+
                     </form>
 
                 </div>

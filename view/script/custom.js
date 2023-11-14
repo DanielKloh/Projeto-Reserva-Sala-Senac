@@ -210,17 +210,17 @@ document.addEventListener("DOMContentLoaded", function () {
         // Limpar o formulário
         formCadEvento.reset();
 
-        // Criar o objeto com os dados do evento
-        const novoEvento = {
-          id: resposta["id"],
-          title: resposta["disciplina_desc"],
-          color: resposta["color"],
-          start: resposta["start"],
-          end: resposta["end"],
-        };
+        // // Criar o objeto com os dados do evento
+        // const novoEvento = {
+        //   id: resposta["id"],
+        //   title: resposta["disciplina_desc"],
+        //   color: resposta["color"],
+        //   start: resposta["start"],
+        //   end: resposta["end"],
+        // };
 
-        // Adicionar o evento ao calendário
-        calendar.addEvent(novoEvento);
+        // // Adicionar o evento ao calendário
+        // calendar.addEvent(novoEvento);
 
         // Chamar a função para remover a mensagem após 3 segundo
         removerMsg();
@@ -249,12 +249,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Aguardar o usuario clicar no botao editar
     btnViewEditEvento.addEventListener("click", () => {
       // Ocultar os detalhes do evento
+      document.getElementById("labelVisualizar").style.display = "none";
       document.getElementById("visualizarReserva").style.display = "none";
-      document.getElementById("labelEditar").style.display = "none";
 
       // Apresentar o formulário editar do evento
       document.getElementById("editarReserva").style.display = "block";
-      document.getElementById("labelVisualizar").style.display = "block";
+      document.getElementById("labelEditar").style.display = "block";
     });
   }
 
@@ -267,11 +267,11 @@ document.addEventListener("DOMContentLoaded", function () {
     btnViewEvento.addEventListener("click", () => {
       // Apresentar os detalhes do evento
       document.getElementById("visualizarReserva").style.display = "block";
-      document.getElementById("labelEditar").style.display = "block";
+      document.getElementById("labelVisualizar").style.display = "block";
 
       // Ocultar o formulário editar do evento
       document.getElementById("editarReserva").style.display = "none";
-      document.getElementById("labelVisualizar").style.display = "none";
+      document.getElementById("labelEditar").style.display = "none";
     });
   }
 
@@ -327,7 +327,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (eventoExiste) {
           // Atualizar os atributos do evento com os novos valores do banco de dados
           eventoExiste.setProp("title", resposta["title"]);
-          // eventoExiste.setProp("color", resposta["color"]);
+          eventoExiste.setProp("color", resposta["color"]);
           eventoExiste.setStart(resposta["start"]);
           eventoExiste.setEnd(resposta["end"]);
         }
