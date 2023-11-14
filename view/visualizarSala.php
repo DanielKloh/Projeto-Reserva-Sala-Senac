@@ -50,7 +50,7 @@ $dia_posterior = date_create_from_format('d/m/Y', $hoje->format("d/m/Y"));
 $dia_posterior->modify('+1 day');
 
 $salaId = $_GET["salaId"];
-setcookie("salaId", $salaId, time() + 2, "/");
+setcookie("salaId", $salaId, time() + 360, "/");
 
 ?>
 
@@ -90,7 +90,7 @@ setcookie("salaId", $salaId, time() + 2, "/");
     <h2 class="mb-4">Agenda</h2>
 
 
-    <span id="msg"></span>
+    <span id="msgResposta"></span>
 
     <div id='calendar'></div>
 
@@ -102,10 +102,14 @@ setcookie("salaId", $salaId, time() + 2, "/");
                 <div class="modal-header text-center">
                     <h3 class="mt-3" id="labelVisualizar">Visualizar Dados</h3>
                     <h3 class="mt-3" id="labelEditar" style="display: none;">Editar Dados</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="btnFecharModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
+                <div id="reservaId" class="display: none;"></div>
+
                 <div id="visualizarReserva">
+                
+
                     <div class="row mb-3 mt-3">
                         <label for="visualizar_start" class="col-sm-3 col-form-label">Início</label>
                         <div class="col-sm-8">
@@ -157,19 +161,20 @@ setcookie("salaId", $salaId, time() + 2, "/");
 
                     <div class="text-center mt-3 mb-5">
                         <button type="submit" class="btn btn-warning" id="btnViewEditEvento">Editar</button>
-                        <button type="submit" class="btn btn-danger">Deletar</button>
+                        <button type="submit" class="btn btn-danger" id="btnDeletar" name="btnDeletar">Deletar</button>
                     </div>
 
                 </div>
 
                 <div id="editarReserva" style="display: none;">
                     <span id="msgEditReserva"></span>
+                    <span id="msgDeletar"></span>
 
                     <form method="POST" id="formEditReserva">
 
                         <input type="hidden" id="edit_id" name="edit_id">
-                        
-                        <input type="hidden" id="sala_id" name="sala_id" value="<?php echo $salaId?>">
+
+                        <input type="hidden" id="sala_id" name="sala_id" value="<?php echo $salaId ?>">
 
                         <div class="row mb-3 mt-3">
                             <label for="editar_start" class="col-sm-3 col-form-label">Início</label>
@@ -189,7 +194,7 @@ setcookie("salaId", $salaId, time() + 2, "/");
                             <label for="editarPeriodo" class="col-sm-2 col-form-label">Turno</label>
                             <div class="col-sm-10">
                                 <select id="editarPeriodo" class="form-select" name="editarPeriodo" required>
-                                    <option value="1">Manhã</option>
+                                    <option selected value="1">Manhã</option>
                                     <option value="2">Tarde</option>
                                     <option value="3">Noite</option>
                                 </select>
@@ -199,14 +204,16 @@ setcookie("salaId", $salaId, time() + 2, "/");
                         <div class="row mb-3">
                             <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
                             <div class="col-sm-8" id="porfessor_desc">
-                                <input type="text" class="form-control" id="editar_professor_desc" name="editar_professor_desc">
+                                <input type="text" class="form-control" id="editar_professor_desc"
+                                    name="editar_professor_desc">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" id="editar_disciplina_desc" name="editar_disciplina_desc">
+                                <input type="text" class="form-control" id="editar_disciplina_desc"
+                                    name="editar_disciplina_desc">
                             </div>
                         </div>
 
@@ -224,13 +231,13 @@ setcookie("salaId", $salaId, time() + 2, "/");
                         <div class="row mb-3">
                             <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
                             <div class="col-sm-8">
-                                <input type="text"class="form-control" id="editar_observacao" name="editar_observacao">
+                                <input type="text" class="form-control" id="editar_observacao" name="editar_observacao">
                             </div>
                         </div>
 
                         <div class="text-center mt-3 mb-5">
-                            <button type="submit" name="btnEditReserva" id="btnEditReserva"class="btn btn-warning">Editar</button>
-                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn btn-success">Visualizar</button>
+                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn-primary">Voltar</button>
+                            <button type="submit" name="btnEditReserva" id="btnEditReserva" class="btn btn-success">Confirmar</button>
                         </div>
 
                     </form>
@@ -257,7 +264,7 @@ setcookie("salaId", $salaId, time() + 2, "/");
                 </div>
                 <div class="modal-body">
 
-                    <span id="msgCadEvento"></span>
+                    <span id="msg"></span>
 
                     <form method="POST" id="formCadEvento" class="needs-validation">
 

@@ -165,11 +165,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Receber o SELETOR do formulário cadastrar evento
   const formCadEvento = document.getElementById("formCadEvento");
 
-  // Receber o SELETOR da mensagem genérica
-  const msg = document.getElementById("msg");
+  // // Receber o SELETOR da mensagem genérica
+  // const msg = document.getElementById("msg");
 
   // Receber o SELETOR da mensagem cadastrar evento
-  const msgCadEvento = document.getElementById("msgCadEvento");
+  const msgResposta = document.getElementById("msgResposta");
 
   // Receber o SELETOR do botão da janela modal cadastrar evento
   const btnCadEvento = document.getElementById("btnCadEvento");
@@ -199,28 +199,29 @@ document.addEventListener("DOMContentLoaded", function () {
       // Acessa o IF quando não cadastrar com sucesso
       if (!resposta["status"]) {
         // Enviar a mensagem para o HTML
-        msgCadEvento.innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
+        document.getElementById(
+          "msg"
+        ).innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
       } else {
-        // Enviar a mensagem para o HTML
-        msg.innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
-
-        // Enviar a mensagem para o HTML
-        msgCadEvento.innerHTML = "";
+        msgResposta.innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
 
         // Limpar o formulário
         formCadEvento.reset();
 
-        // // Criar o objeto com os dados do evento
-        // const novoEvento = {
-        //   id: resposta["id"],
-        //   title: resposta["disciplina_desc"],
-        //   color: resposta["color"],
-        //   start: resposta["start"],
-        //   end: resposta["end"],
-        // };
+        // Criar o objeto com os dados do evento
+        const novoEvento = {
+          id: resposta["id"],
+          title: resposta["disciplina_desc"],
+          color: resposta["color"],
+          start: resposta["start"],
+          professor_desc: resposta["professor_desc"],
+          disciplina_desc: resposta["disciplina_desc"],
+          status: resposta["status"],
+          observacao: resposta["observacao"],
+        };
 
-        // // Adicionar o evento ao calendário
-        // calendar.addEvent(novoEvento);
+        // Adicionar o evento ao calendário
+        calendar.addEvent(novoEvento);
 
         // Chamar a função para remover a mensagem após 3 segundo
         removerMsg();
@@ -237,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Função para remover a mensagem após 3 segundo
   function removerMsg() {
     setTimeout(() => {
-      document.getElementById("msg").innerHTML = "";
+      msgResposta.innerHTML = "";
     }, 3000);
   }
 
@@ -312,7 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
         msgEditReserva.innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
       } else {
         // Enviar a mensagem para o HTML
-        msg.innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
+        document.getElementById("msgResposta").innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
 
         // Enviar a mensagem para o HTML
         msgEditReserva.innerHTML = "";
@@ -341,6 +342,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Apresentar no botão o texto salvar
       btnEditReserva.value = "Salvar";
+    });
+  }
+
+  // Receber o SELETOR apagar evento
+  const btnDeletar = document.getElementById("btnDeletar");
+
+  if (btnDeletar) {
+    // Aguardar o usuario clicar no botao apagar
+    btnDeletar.addEventListener("click", async () => {
+      // Exibir uma caixa de diálogo de confirmação
+      const confirmacao = window.confirm(
+        "Tem certeza de que deseja apagar esta Reserva?"
+      );
+
+      let id = document.getElementById("edit_id").value;
+
+      // Verificar se o usuário confirmou
+      if (confirmacao) {
+        // Chamar o arquivo PHP responsável apagar o evento
+        const dados = await fetch("apagarEvento.php?id=" + id);
+
+        // Realizar a leitura dos dados retornados pelo PHP
+        const resposta = await dados.json();
+
+        // Acessa o IF quando não cadastrar com sucesso
+        if (!resposta["status"]) {
+          // Enviar a mensagem para o HTML
+          document.getElementById(
+            "msgResposta"
+          ).innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
+        } else {
+          // Enviar a mensagem para o HTML
+          document.getElementById(
+            "msgResposta"
+          ).innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
+
+          // Recuperar o evento no FullCalendar
+          const eventoExisteRemover = calendar.getEventById(id);
+
+          // Verificar se encontrou o evento no FullCalendar
+          if (eventoExisteRemover) {
+            // Remover o evento do calendário
+            eventoExisteRemover.remove();
+          }
+
+          // Chamar a função para remover a mensagem após 3 segundo
+          removerMsg();
+          
+        }
+      }
     });
   }
 });
