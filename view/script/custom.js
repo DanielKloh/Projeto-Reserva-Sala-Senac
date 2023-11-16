@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
           start: resposta["start"],
           professor_desc: resposta["professor_desc"],
           disciplina_desc: resposta["disciplina_desc"],
-          status: resposta["status"],
+          status: resposta["statusReserva"],
           observacao: resposta["observacao"],
         };
 

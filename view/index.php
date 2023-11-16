@@ -129,7 +129,7 @@ $dia_posterior->modify('+1 day');
 
 	<div class="corpo">
 
-		<h1> Escolha a sala </h3>
+		<h1> Selecione uma Sala </h1>
 
 
 		<table class="lista_comum" cellpadding="4" cellspacing="4">

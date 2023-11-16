@@ -5,8 +5,6 @@ require_once "../controller/salaController.php";
 
 $salaController = new salaController();
 
-// $sala = $salaController->excluir();
-// $sala = $salaController->salvar();
 $sala = $salaController->abrir();
 if (isset($sala[0]))
     extract($sala[0]);
@@ -14,7 +12,6 @@ if (isset($sala[0]))
 if (!isset($id)) {
     $nome = '';
     $id = 0;
-
 }
 
 
@@ -52,6 +49,8 @@ $dia_posterior->modify('+1 day');
 $salaId = $_GET["salaId"];
 setcookie("salaId", $salaId, time() + 360, "/");
 
+
+
 ?>
 
 
@@ -84,15 +83,15 @@ setcookie("salaId", $salaId, time() + 360, "/");
 <body>
 
     <!-- menu esquerdo -->
-    <?php include "menu_esquerdo.php"; ?>
+    <?php  include "menu_esquerdo.php"; ?>
 
 
-    <h2 class="mb-4">Agenda</h2>
+    <h2 class="mb-4 tituloSala">Reservas do <?php echo $salaController->buscarNomeSala($salaId)?></h2> 
 
 
     <span id="msgResposta"></span>
 
-    <div id='calendar'></div>
+    <div id='calendar' class="calendar"></div>
 
     <!-- Modal Visualizar -->
     <div class="modal fade" id="visualizarModal" tabindex="-1" aria-labelledby="visualizarModalLabel"

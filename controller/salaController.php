@@ -89,6 +89,23 @@ class salaController
 		return $tabela;
 		
 	}
+
+	public function buscarNomeSala($id){
+		
+		$sala = new sala();
+		
+		$linhas = $sala->listar();
+
+
+		for ($i=0; $i < count($linhas); $i++) { 
+			if( $linhas[$i]['id'] == $id ){
+				return $linhas[$i]['nome'];
+			}
+		}
+
+	
+	
+	}
 }
 
 ?>

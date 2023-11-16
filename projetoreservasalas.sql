@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09/11/2023 às 20:43
+-- Tempo de geração: 16/11/2023 às 19:32
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -106,39 +106,26 @@ CREATE TABLE `reserva` (
   `id` int(11) NOT NULL,
   `sala_id` int(11) NOT NULL,
   `periodo_id` int(11) NOT NULL,
-  `dia` date NOT NULL,
+  `dia` datetime NOT NULL,
   `professor_desc` varchar(255) DEFAULT NULL,
   `disciplina_desc` varchar(255) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT 1 COMMENT '1 reservada, 2 confirmada, 3 cancelada ',
   `observacao` text DEFAULT NULL,
-  `data_final` date DEFAULT NULL
+  `data_final` datetime DEFAULT NULL,
+  `color` varchar(10) NOT NULL
 ) ENGINE=InnoDB AVG_ROW_LENGTH=4096 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Despejando dados para a tabela `reserva`
 --
 
-INSERT INTO `reserva` (`id`, `sala_id`, `periodo_id`, `dia`, `professor_desc`, `disciplina_desc`, `status`, `observacao`, `data_final`) VALUES
-(59, 1, 1, '2023-10-02', 'Nairo', 'Informática Fundamental', 1, '40 cadeiras', '0000-00-00'),
-(60, 1, 2, '2023-10-02', 'João Muniz ', '', 2, 'Lógica de programação ', NULL),
-(61, 1, 2, '2023-10-09', 'João Muniz ', '', 2, 'Lógica de programação ', NULL),
-(62, 1, 2, '2023-10-16', 'João Muniz ', '', 2, 'Lógica de programação ', NULL),
-(63, 1, 2, '2023-10-23', 'João Muniz ', '', 2, 'Lógica de programação ', NULL),
-(64, 1, 2, '2023-10-30', 'João Muniz ', '', 2, 'Lógica de programação ', NULL),
-(65, 1, 2, '2023-10-04', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(66, 1, 2, '2023-10-11', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(67, 1, 2, '2023-10-18', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(68, 1, 2, '2023-10-25', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(69, 1, 2, '2023-11-01', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(70, 1, 2, '2023-10-06', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(71, 1, 2, '2023-10-13', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(72, 1, 2, '2023-10-20', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(73, 1, 2, '2023-10-27', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(74, 1, 2, '2023-11-03', 'João Muniz ', 'Lógica de programação 4499', 2, '', NULL),
-(80, 12, 1, '2023-10-04', 'd', 'd', 1, 'd', NULL),
-(83, 10, 3, '2023-10-31', 'Nairo', 'TI', 1, '', NULL),
-(84, 1, 1, '2023-11-07', 'Daniel', 'daniel adventure', 1, 'daniel', '2023-11-07'),
-(86, 1, 2, '2023-11-08', 'ef', 'fefe', 1, 'dafsdsafdsa', '2023-11-09');
+INSERT INTO `reserva` (`id`, `sala_id`, `periodo_id`, `dia`, `professor_desc`, `disciplina_desc`, `status`, `observacao`, `data_final`, `color`) VALUES
+(209, 6, 3, '2023-11-13 19:00:00', 'Nairo Sanches', 'Técnico em Informática', 1, 'Tem Aula', '2023-11-13 22:00:00', '#FF6347'),
+(228, 1, 1, '0000-00-00 00:00:00', '2', '2', 1, '2', '0000-00-00 00:00:00', '#00FA9A'),
+(229, 1, 1, '2023-11-02 00:00:00', '3', '3', 1, '3', '2023-11-02 03:00:00', '#00FA9A'),
+(230, 1, 1, '2023-11-03 00:00:00', '2', '2', 1, '2', '2023-11-03 02:00:00', '#00FA9A'),
+(234, 10, 1, '0000-00-00 00:00:00', 'Aldair', 'Informática Basica', 1, 'Lanche coletivo da turma', '0000-00-00 00:00:00', '#00FA9A'),
+(239, 1, 1, '2023-11-16 02:00:00', 'x', 'x', 1, '3333', '2023-11-16 03:00:00', '#00FA9A');
 
 -- --------------------------------------------------------
 
@@ -262,7 +249,7 @@ ALTER TABLE `periodo`
 -- AUTO_INCREMENT de tabela `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
 
 --
 -- AUTO_INCREMENT de tabela `sala`
