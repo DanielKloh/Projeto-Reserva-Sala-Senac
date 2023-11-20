@@ -7,7 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const cadastrarModal = new bootstrap.Modal(
     document.getElementById("cadastrarModal")
   );
-
+      // Receber o SELETOR da janela modal visualizar
+      const visualizarModal = new bootstrap.Modal(
+        document.getElementById("visualizarModal")
+      );
   // Instanciar FullCalendar.Calendar e atribuir a variável calendar
   var calendar = new FullCalendar.Calendar(calendarEl, {
     // Incluir o bootstrap 5
@@ -43,10 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Identificar o clique do usuário sobre o evento
     eventClick: function (info) {
-      // Receber o SELETOR da janela modal visualizar
-      const visualizarModal = new bootstrap.Modal(
-        document.getElementById("visualizarModal")
-      );
+
 
       // document.getElementById("editar_start").value =
       // info.event.start.toLocaleString();
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Abrir a janela modal visualizar
       visualizarModal.show();
     },
-    // Abrir a janela modal cadastrar quando clicar sobre o dia no calendário
+    // Abrir a janela modal cadastrar quando clicar sobre oe dia no calendário
     select: function (info) {
       // Chamar a função para converter a data selecionada para ISO8601 e enviar para o formulário
       document.getElementById("cad_start").value = converterData(info.start);
@@ -389,7 +389,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Chamar a função para remover a mensagem após 3 segundo
           removerMsg();
-          
+                  // Fechar a janela modal
+        visualizarModal.hide();
         }
       }
     });
