@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const cadastrarModal = new bootstrap.Modal(
     document.getElementById("cadastrarModal")
   );
-      // Receber o SELETOR da janela modal visualizar
-      const visualizarModal = new bootstrap.Modal(
-        document.getElementById("visualizarModal")
-      );
+  // Receber o SELETOR da janela modal visualizar
+  const visualizarModal = new bootstrap.Modal(
+    document.getElementById("visualizarModal")
+  );
   // Instanciar FullCalendar.Calendar e atribuir a variável calendar
   var calendar = new FullCalendar.Calendar(calendarEl, {
     // Incluir o bootstrap 5
@@ -46,8 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Identificar o clique do usuário sobre o evento
     eventClick: function (info) {
-
-
       // document.getElementById("editar_start").value =
       // info.event.start.toLocaleString();
 
@@ -65,57 +63,66 @@ document.addEventListener("DOMContentLoaded", function () {
       let observacao = document.getElementById("observacao");
       let status = document.getElementById("status");
       let turno = document.getElementById("turno");
-      let editar_start = document.getElementById("editar_start");
-      let editar_end = document.getElementById("editar_end");
-      let editarPeriodo = document.getElementById("editarPeriodo");
       let editar_professor_desc = document.getElementById(
         "editar_professor_desc"
       );
       let editar_disciplina_desc = document.getElementById(
         "editar_disciplina_desc"
       );
-      let editarStatus = document.getElementById("editarStatus");
       let editar_observacao = document.getElementById("editar_observacao");
 
+      //Atribuir o valor correto do compo id da janela modal de visualizar e editar
       edit_id.setAttribute("value", info.event.id);
 
+      //Atribuir o valor correto do compo disciplina da janela modal de visualizar e editar
       disciplina_desc.innerText = info.event.extendedProps.disciplina_desc;
       editar_disciplina_desc.setAttribute(
         "value",
         info.event.extendedProps.disciplina_desc
       );
 
+      //Atribuir o valor correto do compo professor da janela modal de visualizar e editar
       professor_desc.innerText = info.event.extendedProps.professor_desc;
       editar_professor_desc.setAttribute(
         "value",
         info.event.extendedProps.professor_desc
       );
 
+      //Atribuir o valor correto do compo observação da janela modal de visualizar e editar
       observacao.innerText = info.event.extendedProps.observacao;
       editar_observacao.setAttribute(
         "value",
         info.event.extendedProps.observacao
       );
 
-      status.innerText = info.event.extendedProps.status;
-      editarStatus.setAttribute("value", info.event.extendedProps.status);
-
+      //Popular o valor correto do campo select do turno da reserva
       if (info.event.extendedProps.turno === 1) {
         turno.innerText = "Manhã";
-        // editarPeriodo.setAttribute("value", 1);
-        // document.getElementById("manha").setAttribute("selected");
+        document.getElementById("manha").selected = true;
       } else if (info.event.extendedProps.turno === 2) {
         turno.innerText = "Tarde";
-        // editarPeriodo.setAttribute("value", 2);
-        // document.getElementById("tarde").setAttribute("selected");
+        document.getElementById("tarde").selected = true;
       } else {
         turno.innerText = "Noite";
-        // editarPeriodo.setAttribute("value", 3);
-        // document.getElementById("noite").setAttribute("selected");
+        document.getElementById("noite").selected = true;
       }
 
+      //Popular o valor correto do campo select do status da reserva
+      if (info.event.extendedProps.status === 1) {
+        status.innerText = "Reservado";
+        document.getElementById("reservado").selected = true;
+      } else if (info.event.extendedProps.status === 2) {
+        status.innerText = "Confirmado";
+        document.getElementById("confirmado").selected = true;
+      } else {
+        status.innerText = "Cancelado";
+        document.getElementById("cancelado").selected = true;
+      }
+
+      //Preencher o campo de data
       document.getElementById("visualizar_start").innerText =
         info.event.start.toLocaleString();
+
       document.getElementById("visualizar_end").innerText =
         info.event.end !== null
           ? info.event.end.toLocaleString()
@@ -216,7 +223,8 @@ document.addEventListener("DOMContentLoaded", function () {
           start: resposta["start"],
           professor_desc: resposta["professor_desc"],
           disciplina_desc: resposta["disciplina_desc"],
-          status: resposta["statusReserva"],
+          status: Number(resposta["statusReserva"]),
+          turno: Number(resposta["periodo_id"]),
           observacao: resposta["observacao"],
         };
 
@@ -313,22 +321,28 @@ document.addEventListener("DOMContentLoaded", function () {
         msgEditReserva.innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
       } else {
         // Enviar a mensagem para o HTML
-        document.getElementById("msgResposta").innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
+        document.getElementById(
+          "msgResposta"
+        ).innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
 
         // Enviar a mensagem para o HTML
         msgEditReserva.innerHTML = "";
 
         // Limpar o formulário
-        formEditReserva.reset();
+        // formEditReserva.reset();
 
         // Recuperar o evento no FullCalendar pelo id
         const eventoExiste = calendar.getEventById(resposta["id"]);
-
+        console.log(resposta["professor_desc"]);
         // Verificar se encontrou o evento no FullCalendar pelo id
         if (eventoExiste) {
           // Atualizar os atributos do evento com os novos valores do banco de dados
           eventoExiste.setProp("title", resposta["title"]);
           eventoExiste.setProp("color", resposta["color"]);
+          //eventoExiste.addEvent("professor_desc", resposta["professor_desc"]);
+          // eventoExiste.setProp("disciplina_desc", resposta["disciplina_desc"]);
+          // eventoExiste.setProp("status", resposta["status"]);
+          // eventoExiste.setProp("observacao", resposta["observacao"]);
           eventoExiste.setStart(resposta["start"]);
           eventoExiste.setEnd(resposta["end"]);
         }
@@ -389,8 +403,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Chamar a função para remover a mensagem após 3 segundo
           removerMsg();
-                  // Fechar a janela modal
-        visualizarModal.hide();
+          // Fechar a janela modal
+          visualizarModal.hide();
         }
       }
     });

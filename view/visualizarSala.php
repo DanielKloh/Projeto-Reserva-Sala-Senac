@@ -180,7 +180,7 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             <div class="col-sm-8">
                                 <input type="datetime-local" class="form-control" id="editar_start" name="editar_start">
                             </div>
-                        </div>
+                        </div> 
 
                         <div class="row mb-3">
                             <label for="editar_end" class="col-sm-3 col-form-label">Fim</label>
@@ -193,9 +193,9 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             <label for="editarPeriodo" class="col-sm-2 col-form-label">Turno</label>
                             <div class="col-sm-10">
                                 <select id="editarPeriodo" class="form-select" name="editarPeriodo" required>
-                                    <option selected value="1">Manhã</option>
-                                    <option value="2">Tarde</option>
-                                    <option value="3">Noite</option>
+                                    <option id="manha" selected value="1">Manhã</option>
+                                    <option id="tarde" value="2">Tarde</option>
+                                    <option id="noite" value="3">Noite</option>
                                 </select>
                             </div>
                         </div>
@@ -220,9 +220,9 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             <label for="editarStatus" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
                                 <select id="editarStatus" class="form-select" name="editarStatus" required>
-                                    <option selected value="1">Reservado</option>
-                                    <option value="2">Confirmada</option>
-                                    <option value="3">Cancelada</option>
+                                    <option id="reservado" selected value="1">Reservado</option>
+                                    <option id="confirmado" value="2">Confirmada</option>
+                                    <option id="cancelado" value="3">Cancelada</option>
                                 </select>
                             </div>
                         </div>
@@ -235,7 +235,7 @@ setcookie("salaId", $salaId, time() + 360, "/");
                         </div>
 
                         <div class="text-center mt-3 mb-5">
-                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn-primary">Voltar</button>
+                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn btn-primary">Voltar</button>
                             <button type="submit" name="btnEditReserva" id="btnEditReserva" class="btn btn-success">Confirmar</button>
                         </div>
 

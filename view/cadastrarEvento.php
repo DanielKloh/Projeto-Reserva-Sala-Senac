@@ -40,7 +40,7 @@ $cad_event->bindParam(':color', $color);
 
 // Verificar se consegui cadastrar corretamente
 if ($cad_event->execute()) {
-    $retorna = ['status' => true, 'msg' => 'Evento cadastrado com sucesso!', 'id' => $conn->lastInsertId(), 'title' => $dados['disciplina_desc'],'start' => $dados['cad_start'], 'end' => $dados['cad_end'],'professor_desc' => $dados["professor_desc"], 'disciplina_desc' => $dados["disciplina_desc"],'observacao' => $dados["observacao"],'statusReserva'=>$dados["status"],"color"=>$color];
+    $retorna = ['status' => true, 'msg' => 'Evento cadastrado com sucesso!', 'id' => $conn->lastInsertId(), 'title' => $dados['disciplina_desc'],'start' => $dados['cad_start'], 'end' => $dados['cad_end'],'professor_desc' => $dados["professor_desc"], 'disciplina_desc' => $dados["disciplina_desc"],'observacao' => $dados["observacao"],'statusReserva'=>$dados["status"],"color"=>$color,'periodo_id'=>$dados["periodo_id"]];
 } else {
     $retorna = ['status' => false, 'msg' => 'Erro: Evento não cadastrado!'];
 }
