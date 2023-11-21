@@ -2,6 +2,7 @@
 
 require_once "util.php";
 require_once "../model/sala.php";
+require_once "../model/periodo.php";
 
 class salaController
 {
@@ -101,10 +102,26 @@ class salaController
 			if( $linhas[$i]['id'] == $id ){
 				return $linhas[$i]['nome'];
 			}
-		}
+		}	
+	}
 
+	public function buscarPeriodos(){
+
+		$periodo = new periodo();
+
+		$listaPeriodo = $periodo->listar();
 	
-	
+		$contador = 1;
+
+		for ($i=0; $i < count($listaPeriodo); $i++) { 
+		
+			$str = strtolower($listaPeriodo[$i]["nome"]);
+		
+			echo '<option id="'.str_replace('ã', 'a', $str).'" value="'.$contador.'">'.$listaPeriodo[$i]["nome"].'</option>';
+		
+			$contador++;
+		}
+		return;
 	}
 }
 

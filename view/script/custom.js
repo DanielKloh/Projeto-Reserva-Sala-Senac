@@ -46,17 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Identificar o clique do usuário sobre o evento
     eventClick: function (info) {
-      // document.getElementById("editar_start").value =
-      // info.event.start.toLocaleString();
-
-      // document.getElementById("editar_end").setAttribute(
-      // "value",
-      // info.event.end !== null
-      //   ? info.event.end.toLocaleString()
-      //   : info.event.start.toLocaleString()
-
-      // );
-
       // Enviar para a janela modal os dados do evento
       let disciplina_desc = document.getElementById("disciplina_desc");
       let professor_desc = document.getElementById("professor_desc");
@@ -119,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("cancelado").selected = true;
       }
 
-      //Preencher o campo de data
+      //Preencher o campo de data na modal de visualizar e editar
       document.getElementById("visualizar_start").innerText =
         info.event.start.toLocaleString();
 
@@ -127,6 +116,10 @@ document.addEventListener("DOMContentLoaded", function () {
         info.event.end !== null
           ? info.event.end.toLocaleString()
           : info.event.start.toLocaleString();
+
+      document.getElementById("editar_start").value = converterData(info.event.start);
+      document.getElementById("editar_end").value = converterData(info.event.start);
+
 
       // Abrir a janela modal visualizar
       visualizarModal.show();
@@ -297,9 +290,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (formEditReserva) {
     // Aguardar o usuario clicar no botao editar
     formEditReserva.addEventListener("submit", async (e) => {
-      // Não permitir a atualização da pagina
-      e.preventDefault();
 
+      document.getElementById("editar_end").value = document.getElementById("editar_start").value;
+
+      // Não permitir a atualização da pagina
+      // e.preventDefault();
+      
       // Apresentar no botão o texto salvando
       btnEditReserva.value = "Salvando...";
 
@@ -320,42 +316,46 @@ document.addEventListener("DOMContentLoaded", function () {
         // Enviar a mensagem para o HTML
         msgEditReserva.innerHTML = `<div class="alert alert-danger" role="alert">${resposta["msg"]}</div>`;
       } else {
-        // Enviar a mensagem para o HTML
-        document.getElementById(
-          "msgResposta"
-        ).innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
+//         // Enviar a mensagem para o HTML
+//         document.getElementById(
+//           "msgResposta"
+//         ).innerHTML = `<div class="alert alert-success" role="alert">${resposta["msg"]}</div>`;
 
-        // Enviar a mensagem para o HTML
-        msgEditReserva.innerHTML = "";
+        
+//         // Enviar a mensagem para o HTML
+//         msgEditReserva.innerHTML = "";
 
-        // Limpar o formulário
-        // formEditReserva.reset();
+//         // Limpar o formulário
+//         // formEditReserva.reset();
 
-        // Recuperar o evento no FullCalendar pelo id
-        const eventoExiste = calendar.getEventById(resposta["id"]);
-        console.log(resposta["professor_desc"]);
-        // Verificar se encontrou o evento no FullCalendar pelo id
-        if (eventoExiste) {
-          // Atualizar os atributos do evento com os novos valores do banco de dados
-          eventoExiste.setProp("title", resposta["title"]);
-          eventoExiste.setProp("color", resposta["color"]);
-          //eventoExiste.addEvent("professor_desc", resposta["professor_desc"]);
-          // eventoExiste.setProp("disciplina_desc", resposta["disciplina_desc"]);
-          // eventoExiste.setProp("status", resposta["status"]);
-          // eventoExiste.setProp("observacao", resposta["observacao"]);
-          eventoExiste.setStart(resposta["start"]);
-          eventoExiste.setEnd(resposta["end"]);
-        }
+//         // Recuperar o evento no FullCalendar pelo id
+//         const eventoExiste = calendar.getEventById(resposta["id"]);
+        
+//         // Verificar se encontrou o evento no FullCalendar pelo id
+//         if (eventoExiste) {
+//           console.log(eventoExiste.extendedProps);
+//           // Atualizar os atributos do evento com os novos valores do banco de dados
+//           eventoExiste.setProp("title", resposta["title"]);
+//           eventoExiste.setProp("title", resposta["title"]);
+//           eventoExiste.setProp("extendedProps", resposta["periodo"]);
+//           eventoExiste.setStart(resposta["start"]);
+//           eventoExiste.setEnd(resposta["end"]);
+//         }
 
-        // Chamar a função para remover a mensagem após 3 segundo
-        removerMsg();
+     
 
-        // Fechar a janela modal
-        visualizarModal.hide();
+//         // // Fechar a janela modal
+// // Chamar a função para remover a mensagem após 3 segundo
+
+// visualizarModal.hide();
+// removerMsg();
+          location.reload();
       }
 
       // Apresentar no botão o texto salvar
       btnEditReserva.value = "Salvar";
+
+
     });
   }
 
