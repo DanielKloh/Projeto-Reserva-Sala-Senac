@@ -1,7 +1,7 @@
 <?php
 
 // Incluir o arquivo com a conexão com banco de dados
-include_once './conexao.php';
+include_once '../model/conexao.php';
 
 
 // Receber os dados enviado pelo JavaScript
@@ -47,3 +47,4 @@ if ($cad_event->execute()) {
 
 // Converter o array em objeto e retornar para o JavaScript
 echo json_encode($retorna);
+?>

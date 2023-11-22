@@ -12,6 +12,7 @@ class Database {
 		$cfg->db_banco = "projetoreservasalas";
 
 		$this->link = mysqli_connect($cfg->db_host,$cfg->db_user, $cfg->db_senha , $cfg->db_banco ,$cfg->db_porta ) or die("erro: ". mysqli_connect_error());
+		$conn = new PDO("mysql:host=$cfg->db_host;dbname=" . $cfg->db_banco, $cfg->db_user, $cfg->db_senha);
 	}
 
 	function query($sql){

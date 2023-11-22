@@ -1,7 +1,7 @@
 <?php
 
 // Incluir o arquivo com a conexão com banco de dados
-include_once './conexao.php';
+include_once '../model/conexao.php';
 
 // Receber o id enviado pelo JavaScript
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
@@ -19,9 +19,9 @@ if (!empty($id)) {
     $apagar_reserva->bindParam(':id', $id);
 
     // Verificar se consegui apagar corretamente
-    if($apagar_reserva->execute()){
+    if ($apagar_reserva->execute()) {
         $retorna = ['status' => true, 'msg' => 'Reserva apagada com sucesso!'];
-    }else{
+    } else {
         $retorna = ['status' => false, 'msg' => 'Erro: Reserva não apagada!'];
     }
 
@@ -32,3 +32,4 @@ if (!empty($id)) {
 // Converter o array em objeto e retornar para o JavaScript
 echo json_encode($retorna);
 
+?>

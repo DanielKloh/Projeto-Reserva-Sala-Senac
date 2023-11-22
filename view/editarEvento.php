@@ -1,22 +1,20 @@
 <?php
 
 // Incluir o arquivo com a conexão com banco de dados
-include_once './conexao.php';
+include_once '../model/conexao.php';
 
 // Receber os dados enviado pelo JavaScript
 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
 $color = "";
-if($dados['editarPeriodo'] == 1){
+if ($dados['editarPeriodo'] == 1) {
     $color = "#00FA9A";
-}
-else if($dados["editarPeriodo"] == 2){
+} else if ($dados["editarPeriodo"] == 2) {
     $color = "#00BFFF";
-}
-else{
+} else {
     $color = "#FF6347";
 }
- 
+
 
 // Criar a QUERY editar evento no banco de dados
 $query_edit_event = "UPDATE reserva SET sala_id=:sala_id, periodo_id=:periodo_id,dia=:dia, professor_desc=:professor_desc, disciplina_desc=:disciplina_desc,status=:status,observacao=:observacao,data_final=:data_final, color=:color WHERE id=:id";
@@ -39,10 +37,11 @@ $edit_event->bindParam(':id', $dados['edit_id']);
 
 // Verificar se consegui editar corretamente
 if ($edit_event->execute()) {
-    $resposta = ['status' => true, 'msg' => 'Reserva editada com sucesso!', 'id' => $dados['edit_id'], 'title' => $dados['editar_disciplina_desc'],'start' => $dados['editar_start'], 'end' => $dados['editar_end'],'professor_desc' => $dados["editar_professor_desc"], 'disciplina_desc' => $dados["editar_disciplina_desc"],'observacao' => $dados["editar_observacao"],'statusReserva'=>$dados["editarStatus"],"color"=>$color,'periodo'=>$dados["editarPeriodo"]];
+    $resposta = ['status' => true, 'msg' => 'Reserva editada com sucesso!', 'id' => $dados['edit_id'], 'title' => $dados['editar_disciplina_desc'], 'start' => $dados['editar_start'], 'end' => $dados['editar_end'], 'professor_desc' => $dados["editar_professor_desc"], 'disciplina_desc' => $dados["editar_disciplina_desc"], 'observacao' => $dados["editar_observacao"], 'statusReserva' => $dados["editarStatus"], "color" => $color, 'periodo' => $dados["editarPeriodo"]];
 } else {
     $resposta = ['status' => false, 'msg' => 'Erro: Reserva não editada!'];
 }
 
 // Converter o array em objeto e retornar para o JavaScript
 echo json_encode($resposta);
+?>
