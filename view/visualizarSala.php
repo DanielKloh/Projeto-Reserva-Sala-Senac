@@ -83,10 +83,12 @@ setcookie("salaId", $salaId, time() + 360, "/");
 <body>
 
     <!-- menu esquerdo -->
-    <?php  include "menu_esquerdo.php"; ?>
+    <?php include "menu_esquerdo.php"; ?>
 
 
-    <h2 class="mb-4 tituloSala">Reservas do <?php echo $salaController->buscarNomeSala($salaId)?></h2> 
+    <h2 class="mb-4 tituloSala">Reservas do
+        <?php echo $salaController->buscarNomeSala($salaId) ?>
+    </h2>
 
 
     <span id="msgResposta"></span>
@@ -101,23 +103,24 @@ setcookie("salaId", $salaId, time() + 360, "/");
                 <div class="modal-header text-center">
                     <h3 class="mt-3" id="labelVisualizar">Visualizar Dados</h3>
                     <h3 class="mt-3" id="labelEditar" style="display: none;">Editar Dados</h3>
-                    <button id="btnFecharModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="btnFecharModal" type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
 
                 <div id="reservaId" class="display: none;"></div>
 
                 <div id="visualizarReserva">
-                
+
 
                     <div class="row mb-3 mt-3">
-                        <label for="visualizar_start" class="col-sm-3 col-form-label">Data</label>
+                        <label for="visualizar_start" class="col-sm-3 col-form-label">Data da Reserva</label>
                         <div class="col-sm-8">
                             <span type="datetime-local" class="form-control" id="visualizar_start"> </sp>
                         </div>
                     </div>
 
-                    <div class="row mb-3" style="display: none;">
-                        <label for="visualizar_end" class="col-sm-3 col-form-label">Fim</label>
+                    <div class="row mb-3">
+                        <label for="visualizar_end" class="col-sm-3 col-form-label">Data Final</label>
                         <div class="col-sm-8">
                             <span type="datetime-local" class="form-control" id="visualizar_end"></span>
                         </div>
@@ -176,14 +179,21 @@ setcookie("salaId", $salaId, time() + 360, "/");
                         <input type="hidden" id="sala_id" name="sala_id" value="<?php echo $salaId ?>">
 
                         <div class="row mb-3 mt-3">
-                            <label for="editar_start" class="col-sm-3 col-form-label">Data</label>
+                            <label for="dataAtual" class="col-sm-3 col-form-label">Data da Reserva</label>
+                            <div class="col-sm-9">
+                                <span type="datetime-local" class="form-control" id="dataAtual" name="dataAtual"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 mt-3">
+                            <label for="editar_start" class="col-sm-3 col-form-label">Data Inicial</label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" id="editar_start" name="editar_start">
                             </div>
-                        </div> 
+                        </div>
 
-                        <div class="row mb-3" style="display: none;">
-                            <label for="editar_end" class="col-sm-3 col-form-label" >Fim</label>
+                        <div class="row mb-3">
+                            <label for="editar_end" class="col-sm-3 col-form-label">Data Final</label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" class="form-control" id="editar_end" name="editar_end">
                             </div>
@@ -193,7 +203,7 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             <label for="editarPeriodo" class="col-sm-3 col-form-label">Turno</label>
                             <div class="col-sm-9">
                                 <select id="editarPeriodo" class="form-select" name="editarPeriodo" required>
-          <?php $salaController->buscarPeriodos()?>
+                                    <?php $salaController->buscarPeriodos() ?>
                                 </select>
                             </div>
                         </div>
@@ -228,13 +238,16 @@ setcookie("salaId", $salaId, time() + 360, "/");
                         <div class="row mb-3">
                             <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editar_observacao" name="editar_observacao" style="border: 1px solid #ced4da;">
+                                <input type="text" class="form-control" id="editar_observacao" name="editar_observacao"
+                                    style="border: 1px solid #ced4da;">
                             </div>
                         </div>
 
                         <div class="text-center mt-3 mb-5">
-                            <button type="button" name="btnViewEvento" id="btnViewEvento" class="btn btn-primary">Voltar</button>
-                            <button type="submit" name="btnEditReserva" id="btnEditReserva" class="btn btn-success">Confirmar</button>
+                            <button type="button" name="btnViewEvento" id="btnViewEvento"
+                                class="btn btn-primary">Voltar</button>
+                            <button type="submit" name="btnEditReserva" id="btnEditReserva"
+                                class="btn btn-success">Confirmar</button>
                         </div>
 
                     </form>
@@ -265,19 +278,30 @@ setcookie("salaId", $salaId, time() + 360, "/");
 
                     <form method="POST" id="formCadEvento" class="needs-validation">
 
-                         <div class="row mb-3">
-                             <label for="cad_start" class="col-sm-3 col-form-label">Data</label>
-                             <div class="col-sm-9">
-                                 <input type="datetime-local" name="cad_start" class="form-control" id="cad_start" required>
-                             </div>
-                         </div>
+                        <div class="row mb-3">
+                            <label for="cad_start" class="col-sm-3 col-form-label">Data Inicial</label>
+                            <div class="col-sm-9">
+                                <input type="datetime-local" name="cad_start" class="form-control" id="cad_start"
+                                    required>
+                            </div>
+                        </div>
 
-                        <div class="row mb-3" style="display:none;">
-                            <label for="cad_end" class="col-sm-3 col-form-label">Fim</label>
+                        <div class="row mb-3" style="">
+                            <label for="cad_end" class="col-sm-3 col-form-label">Data Final</label>
                             <div class="col-sm-9">
                                 <input type="datetime-local" name="cad_end" class="form-control" id="cad_end" required>
                             </div>
                         </div>
+
+                        <div>Escolha os dias da semana que você deseja:</div>
+
+                        <?php
+                        $dias_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
+
+                        foreach ($dias_semana as $index => $dia) {
+                            echo "<label><input type='checkbox' name='dias[]' value='$index'> $dia</label><br>";
+                        }
+                        ?>
 
                         <?php echo '<input type="hidden" name="sala_id" id="sala_id" value=' . $salaId . '>' ?>
 
@@ -285,7 +309,7 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             <label for="periodo_id" class="col-sm-3 col-form-label">Turno</label>
                             <div class="col-sm-9">
                                 <select id="periodo_id" class="form-select" name="periodo_id" required>
-                                <?php $salaController->buscarPeriodos()?>
+                                    <?php $salaController->buscarPeriodos() ?>
                                 </select>
                             </div>
                         </div>
@@ -293,15 +317,15 @@ setcookie("salaId", $salaId, time() + 360, "/");
                         <div class="row mb-3">
                             <label for="professor_desc" class="col-sm-3 col-form-label">Professor</label>
                             <div class="col-sm-9">
-                                <input type="text" name="professor_desc" class="form-control col-form-label" style="border: 1px solid #ced4da;" id="professor_desc"
-                                    required>
+                                <input type="text" name="professor_desc" class="form-control col-form-label"
+                                    style="border: 1px solid #ced4da;" id="professor_desc" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="disciplina_desc" class="col-sm-3 col-form-label">Disciplina</label>
-                            <div class="col-sm-9" >
-                                <input type="text" style="border: 1px solid #ced4da;" name="disciplina_desc" class="form-control" id="disciplina_desc"
-                                    required>
+                            <div class="col-sm-9">
+                                <input type="text" style="border: 1px solid #ced4da;" name="disciplina_desc"
+                                    class="form-control" id="disciplina_desc" required>
                             </div>
                         </div>
 
@@ -319,7 +343,8 @@ setcookie("salaId", $salaId, time() + 360, "/");
                         <div class="row mb-2">
                             <label for="observacao" class="col-sm-3 col-form-label">Observacao</label>
                             <div class="col-sm-9">
-                                <input type="text" name="observacao" class="form-control" id="observacao" style="border: 1px solid #ced4da;" required>
+                                <input type="text" name="observacao" class="form-control" id="observacao"
+                                    style="border: 1px solid #ced4da;" required>
                             </div>
                         </div>
 
