@@ -196,9 +196,9 @@ document.addEventListener("DOMContentLoaded", function () {
         method: "POST",
         body: dadosForm,
       });
-
       // Realizar a leitura dos dados retornados pelo PHP
       const resposta = await dados.json();
+      
 
       // Acessa o IF quando não cadastrar com sucesso
       if (!resposta["status"]) {
