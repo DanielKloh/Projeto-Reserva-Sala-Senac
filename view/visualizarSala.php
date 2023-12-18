@@ -297,9 +297,12 @@ setcookie("salaId", $salaId, time() + 360, "/");
 
                         <?php
                         $dias_semana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
+                        $valores = ["seg", "ter", "quar", "quin", "sex", "sab", "dom"];
 
+                        $i = 0;
                         foreach ($dias_semana as $index => $dia) {
-                            echo "<label><input type='checkbox' name='dias[]' value='$index'> $dia</label><br>";
+                            echo "<label><input type='checkbox' name='dias[]' value='$valores[$i]'> $dia</label><br>";
+                            $i++;
                         }
                         ?>
 

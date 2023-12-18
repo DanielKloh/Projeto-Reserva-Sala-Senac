@@ -1,5 +1,11 @@
 <?php
-
+//Monday
+//Tuesday
+//Wednesday
+//Thursday
+//Friday
+//Saturday
+//Sunday
 // Incluir o arquivo com a conexão com banco de dados
 include_once '../model/conexao.php';
 
@@ -16,10 +22,9 @@ if ($dados['periodo_id'] == 1) {
     $color = "#FF6347";
 }
 
-$diasQueEufiz = array(0, 2);
+$arrayDias = $_POST["dias"];
 
-$qtdDias = count($diasQueEufiz);
-
+$qtdDias = count($arrayDias);
 
 // Obtenha a data e a hora do seu formulário HTML
 $data_local = $dados['cad_start']; // Substitua 'data_hora_local' pelo nome do campo em seu formulário
@@ -27,85 +32,255 @@ $data_local = $dados['cad_start']; // Substitua 'data_hora_local' pelo nome do c
 // Converta a data e a hora local para um objeto DateTime do PHP
 $data_hora = new DateTime($data_local);
 
-// Obtenha o dia da semana
-// $dia_da_semana = $data_hora->format('w');
-
-// Array de nomes dos dias da semana
-$nomes_dias_semana = array(0, 1, 2, 3, 4, 5, 6);
-
-// Imprime o dia da semana
-//echo "A data {$data_local} é um {$nomes_dias_semana[$dia_da_semana]}.";
-
-$arrayDias = array();
-
-//retorna um array com o value dos dias da cemana
-for ($i = 0; $i < count($nomes_dias_semana); $i++) {
-
-    for ($j = 0; $j < count($nomes_dias_semana); $j++) {
-        if ($diasQueEufiz[$i] == $j) {
-            $arrayDias[$i] = $nomes_dias_semana[$j];
-        }
-    }
-
+// Obtendo o nome do dia da semana
+$diaDaSemana = $data_hora->format('l');
+$diaInicial = "";
+if($diaDaSemana == "Monday"){
+    $diaInicial = "seg";
 }
-
-
-// Obtém a data e hora do formulário
-$dataFormulario = $dados['cad_start'];
-
-// Ajusta o formato da data e hora para o formato aceito pelo construtor de DateTime
-$dataFormatada = date('Y-m-d H:i:s', strtotime($dataFormulario));
-
-// Cria um objeto DateTime com a data e hora do formulário
-$data = new DateTime($dataFormatada);
-
-// Obtém a nova data formatada
-$novaData = $data->format('Y-m-d H:i:s');
+else if($diaDaSemana == "Tuesday"){
+    $diaInicial = "ter";
+}
+else if($diaDaSemana == "Wednesday"){
+    $diaInicial = "quar";
+}
+else if($diaDaSemana == "Thursday"){
+    $diaInicial = "quin";
+}
+else if($diaDaSemana == "Friday"){
+    $diaInicial = "sex";
+}
+else if($diaDaSemana == "Saturday"){
+    $diaInicial = "sab";
+}
+else if($diaDaSemana == "Sunday"){
+    $diaInicial = "dom";
+}
 
 // Criar a QUERY cadastrar evento no banco de dados
 $query_cad_event = "INSERT INTO reserva (sala_id, periodo_id,dataInicial,dia,professor_desc,disciplina_desc,status,observacao,data_final,color) VALUES (:sala_id, :periodo_id,:dataInicial,:dia, :professor_desc, :disciplina_desc,:status,:observacao,:data_final, :color)";
-
 for ($i = 0; $i < $qtdDias; $i++) {
 
     for ($j = 0; $j < 7; $j++) {
 
-        if ($arrayDias[$i] == $j) {
+        // Obtém a data e hora do formulário
+        $dataFormulario = $dados['cad_start'];
 
-            // Obtém a data e hora do formulário
-            $dataFormulario = $dados['cad_start'];
+        // Ajusta o formato da data e hora para o formato aceito pelo construtor de DateTime
+        $dataFormatada = date('Y-m-d H:i:s', strtotime($dataFormulario));
 
-            // Ajusta o formato da data e hora para o formato aceito pelo construtor de DateTime
-            $dataFormatada = date('Y-m-d H:i:s', strtotime($dataFormulario));
+        // Cria um objeto DateTime com a data e hora do formulário
+        $data = new DateTime($dataFormatada);
 
-            // Cria um objeto DateTime com a data e hora do formulário
-            $data = new DateTime($dataFormatada);
-            
-            if ($j == 0) {
+
+        //Funciona so pra segunda feira como data inicial
+        if ($diaInicial == 'seg') {
+            if ($arrayDias[$i] == 'seg') {
                 $data->add(new DateInterval('P0D'));
-            } else if ($j == 1) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'ter') {
                 $data->add(new DateInterval('P1D'));
-            } else if ($j == 2) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'quar') {
                 $data->add(new DateInterval('P2D'));
-            } else if ($j == 3) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'quin') {
                 $data->add(new DateInterval('P3D'));
-            } else if ($j == 4) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'sex') {
                 $data->add(new DateInterval('P4D'));
-            } else if ($j == 5) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'sab') {
                 $data->add(new DateInterval('P5D'));
-            } else if ($j == 6) {
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'dom') {
                 $data->add(new DateInterval('P6D'));
+                $j=7;
+
+            }
+        }
+
+        //Funciona so pra terça feira como data inicial
+        if ($diaInicial == 'ter') {
+            if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P0D'));
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P1D'));
+                $j=7;
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P2D'));
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P3D'));
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P4D'));
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P5D'));
+                $j=7;
+
+            } else if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P6D'));
+                $j=7;
             }
 
-            // Obtém a nova data formatada
-            $novaData = $data->format('Y-m-d H:i:s');
-
         }
+
+        //Funciona so pra quarta feira como data inicial
+        if ($diaInicial == 'quar') {
+            if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P5D'));
+
+            } else if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P6D'));
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P0D'));
+
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P1D'));
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P2D'));
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P3D'));
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P4D'));
+
+            }
+        }
+
+
+        //Funciona so pra quinta feira como data inicial
+        if ($diaInicial == 'quin') {
+            if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P4D'));
+
+            } else if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P5D'));
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P6D'));
+
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P0D'));
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P1D'));
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P2D'));
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P3D'));
+
+            }
+        }
+
+
+        //Funciona so pra sexta feira como data inicial
+        if ($diaInicial == 'sex') {
+            if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P3D'));
+
+            } else if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P4D'));
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P5D'));
+
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P6D'));
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P0D'));
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P1D'));
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P2D'));
+
+            }
+        }
+
+
+        //Funciona so pra sabado feira como data inicial
+        if ($diaInicial == 'sab') {
+            if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P2D'));
+
+            } else if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P3D'));
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P4D'));
+
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P5D'));
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P6D'));
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P0D'));
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P1D'));
+
+            }
+        }
+
+
+        //Funciona so pra domingo como data inicial
+        if ($diaInicial == 'dom') {
+            if ($arrayDias[$i] == 'seg') {
+                $data->add(new DateInterval('P1D'));
+
+            } else if ($arrayDias[$i] == 'ter') {
+                $data->add(new DateInterval('P2D'));
+
+            } else if ($arrayDias[$i] == 'quar') {
+                $data->add(new DateInterval('P3D'));
+
+            } else if ($arrayDias[$i] == 'quin') {
+                $data->add(new DateInterval('P4D'));
+
+            } else if ($arrayDias[$i] == 'sex') {
+                $data->add(new DateInterval('P5D'));
+
+            } else if ($arrayDias[$i] == 'sab') {
+                $data->add(new DateInterval('P6D'));
+
+            } else if ($arrayDias[$i] == 'dom') {
+                $data->add(new DateInterval('P0D'));
+
+            }
+        }
+
+        // Obtém a nova data formatada
+        $novaData = $data->format('Y-m-d H:i:s');
+
+
     }
 
 
 
-    while ($novaData < $dados['cad_end']) {
-
+    do {
         // Prepara a QUERY
         $cad_event = $conn->prepare($query_cad_event);
 
@@ -122,14 +297,15 @@ for ($i = 0; $i < $qtdDias; $i++) {
         $cad_event->bindParam(':color', $color);
         $cad_event->execute();
 
-
         // Adiciona 7 dias à data
         $data->add(new DateInterval('P7D'));
+
 
         // Obtém a nova data formatada
         $novaData = $data->format('Y-m-d H:i:s');
 
     }
+    while ($novaData < $dados['cad_end']);
 
 
 
