@@ -28,7 +28,6 @@ while ($row_events = $result_events->fetch(PDO::FETCH_ASSOC)) {
         'id' => $id,
         'disciplina_desc' => $disciplina_desc,
         'start' => $dia,
-        // 'end' => $data_final,
         'professor_desc' => $professor_desc,
         'status' => $status,
         'observacao' => $observacao,

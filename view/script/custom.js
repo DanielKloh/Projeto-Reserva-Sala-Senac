@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         info.event.extendedProps.dataInicial.toLocaleString()
       );
       document.getElementById("editar_end").value = converterData(
-        info.event.extendedProps.dataFinal.toLocaleString()
+        info.event.extendedProps.dataFinal.toLocaleString() 
       );
       // Abrir a janela modal visualizar
       visualizarModal.show();
@@ -294,9 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (formEditReserva) {
     // Aguardar o usuario clicar no botao editar
     formEditReserva.addEventListener("submit", async (e) => {
-      document.getElementById("editar_end").value =
-        document.getElementById("editar_start").value;
-
+      
       // Não permitir a atualização da pagina
       // e.preventDefault();
 

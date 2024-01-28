@@ -243,6 +243,17 @@ setcookie("salaId", $salaId, time() + 360, "/");
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <label for="observacao" class="col-sm-3 col-form-label">Editar Todos</label>
+                            <div class="col-sm-9">
+                            <label for="">Sim</label>
+                                <input type="radio" class="" id="editarTudo" name="editarTudo" value="sim" required><br>
+
+                                <label for="">Não</label>
+                                    <input type="radio" class="" id="editarTudo" name="editarTudo" value="nao" required><br>
+                            </div>
+                        </div>
+
                         <div class="text-center mt-3 mb-5">
                             <button type="button" name="btnViewEvento" id="btnViewEvento"
                                 class="btn btn-primary">Voltar</button>
